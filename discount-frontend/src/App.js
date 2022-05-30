@@ -1,5 +1,12 @@
+import React from "react"
+import {Routes, Route} from 'react-router-dom'
+import MainPage from "./components/MainPage"
+import './index.css'
+
 export default function App() {
   return (
-    <h1>Hello world</h1>
+    <Routes>
+      <Route exact path="/" element={<MainPage />}/>
+    </Routes>
   )
 }
