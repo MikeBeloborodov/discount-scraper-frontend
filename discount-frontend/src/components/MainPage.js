@@ -9,15 +9,44 @@ export default function MainPage(){
         "column_3" : [],
         "column_4" : []
     })
+
+    const [websiteButtons, setWebsiteButtons] = React.useState([])
+
+    const [websiteFilter, setWebsiteFilter] = React.useState('')
+
     const URL = process.env.REACT_APP_API_URL
 
     let num_of_columns = 4
     let length_of_columns = 2
     
+    function handle_website_filter(title, event){
+        setWebsiteFilter(title)
+    }
+
     React.useEffect(() => {
+        // website buttons
+        let website_button_elements
+        fetch(URL + 'website')
+            .then(res => res.json())
+            .then(data => {
+                website_button_elements = data.map(data => {
+                    return (
+                        <button 
+                        className='button is-danger is-outlined is-rounded m-2' 
+                        key={data.item_id}
+                        website_name={data.title}
+                        onClick={(e) => handle_website_filter(data.title, e)}>
+                            {data.title}
+                        </button>
+                    )
+                })
+                setWebsiteButtons(website_button_elements)
+            })
+
+        // cards
         for (let i = 0; i < num_of_columns; i++){
             let elements
-            fetch(URL + `/slice?limit=${length_of_columns}&skip=${i * length_of_columns}`, {method: "GET"})
+            fetch(URL + `promo/slice?limit=${length_of_columns}&skip=${i * length_of_columns}&website=${websiteFilter}`, {method: "GET"})
                 .then(res => res.json())
                 .then(data => {
                     elements = data.map(data => {
@@ -57,14 +86,15 @@ export default function MainPage(){
                     })
                 })
             }
-        }, [])
+        }, [websiteFilter])
 
     return(
         <>
             <Navbar />
             <section className='section'>
                 <div className='box'>
-                    I am a box
+                    <p className='content'>Сортировать по сайтам:</p>
+                    {websiteButtons}
                 </div>
             </section>
             <section className='section'>

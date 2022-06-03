@@ -9,3 +9,9 @@
     text-decoration: line-through;
 }
 
+img {
+    float: left;
+    width:  2rem;
+    height: 2rem;
+    object-fit: cover;
+}
