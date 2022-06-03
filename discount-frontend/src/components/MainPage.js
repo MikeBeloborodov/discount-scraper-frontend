@@ -12,6 +12,8 @@ export default function MainPage(){
 
     const [pagination, setPagination] = React.useState([])
 
+    const [dropDownActive, setDropDownActive] = React.useState(false)
+
     const [maxPage, setMaxPage] = React.useState(0)
 
     const [pageSkip, setPageSkip] = React.useState(0)
@@ -22,12 +24,15 @@ export default function MainPage(){
 
     const [websiteFilter, setWebsiteFilter] = React.useState('')
 
+    const [priceFilter, setPriceFilter] = React.useState('price_up')
+
     const URL = process.env.REACT_APP_API_URL
 
     const num_of_columns = 4
     const length_of_columns = 2
     
     function handle_website_filter(title, event){
+        setDropDownActive(false)
         setPageSkip(0)
         setCurrentPage(1)
         setWebsiteFilter(title)
@@ -39,7 +44,7 @@ export default function MainPage(){
             setPageSkip(0)
             return
         }
-        setPageSkip(oldValues => (page_num - 1) * (num_of_columns * length_of_columns))
+        setPageSkip((page_num - 1) * (num_of_columns * length_of_columns))
     }
 
     function handle_next_page(e){
@@ -56,6 +61,15 @@ export default function MainPage(){
         }
         setCurrentPage(oldValues => oldValues - 1)
         setPageSkip(pageSkip - (num_of_columns * length_of_columns))
+    }
+
+    function handle_price_filter(filter, e){
+        setDropDownActive(false)
+        if (filter === "up"){
+            setPriceFilter("price_up")
+        }else{
+            setPriceFilter("price_down")
+        }
     }
 
     React.useEffect(() => {
@@ -104,11 +118,10 @@ export default function MainPage(){
 
         // cards
         for (let i = 0; i < num_of_columns; i++){
-            let elements
-            fetch(URL + `promo/slice?limit=${length_of_columns}&skip=${(i * length_of_columns) + pageSkip}&website=${websiteFilter}`, {method: "GET"})
+            fetch(URL + `promo/slice?limit=${length_of_columns}&skip=${(i * length_of_columns) + pageSkip}&website=${websiteFilter}&order_by=${priceFilter}`, {method: "GET"})
                 .then(res => res.json())
                 .then(data => {
-                    elements = data.map(data => {
+                    let elements = data.map(data => {
                         return (
                             <div className='card' key={data.item_id}>
                                 <div className="card-image">
@@ -122,13 +135,13 @@ export default function MainPage(){
                                     {data.old_price ? 
                                         <div className='columns is-mobile'>
                                             <div className='column'>
-                                                <p className="content has-text-danger">{data.new_price}</p>
+                                                <p className="content has-text-danger">{data.new_price} руб</p>
                                             </div>
                                             <div className='column'>
-                                                <p className="content has-text-dark old-price">{data.old_price}</p>
+                                                <p className="content has-text-dark old-price">{data.old_price} руб</p>
                                             </div>
                                         </div> :
-                                        <p className="content has-text-danger">{data.new_price}</p>
+                                        <p className="content has-text-danger">{data.new_price} руб</p>
                                     }
                                     <a href={data.link} target='_blank'>
                                         <button className='button is-danger is-outlined is-rounded'>{data.website_title}</button>
@@ -145,21 +158,52 @@ export default function MainPage(){
                     })
                 })
             }
-        }, [websiteFilter, pageSkip])
+        }, [websiteFilter, pageSkip, priceFilter])
 
     return(
         <>
             <Navbar />
 
             <section className='section'>
-                <div className='box'>
-                        <p className='content'>Сортировать по сайтам:</p>
-                        <button 
-                            className='button is-danger is-outlined is-rounded m-2' 
-                            onClick={(e) => handle_website_filter('', e)}>
-                                Все сайты
-                            </button>
-                        {websiteButtons}
+                <div className={dropDownActive ? "dropdown is-active" : "dropdown"}>
+                    <div className="dropdown-trigger">
+                        <button className="button" 
+                        aria-haspopup="true" 
+                        aria-controls="dropdown-menu2"
+                        onClick={(e) => {setDropDownActive(oldValue => !oldValue)}}
+                        >
+                        <span>{"Сортировать результаты"}&emsp;&emsp;&emsp;&emsp;</span>
+                        <span className="icon is-small">
+                            <i className="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                        </button>
+                    </div>
+                    <div className="dropdown-menu" id="dropdown-menu2" role="menu">
+                        <div className='box'>
+                            <p className='content'>По сайтам:</p>
+                            <button 
+                                className='button is-danger is-outlined is-rounded m-2' 
+                                onClick={(e) => handle_website_filter('', e)}>
+                                    Все сайты
+                                </button>
+                            {websiteButtons}
+                            <div className='block mt-4'>
+                                <p className='content'>По ценам:</p>
+                                <button 
+                                className='button is-danger is-outlined is-rounded m-2'
+                                onClick={(e) => {handle_price_filter('up', e)}}
+                                >
+                                По возрастанию
+                                </button>
+                                <button 
+                                className='button is-danger is-outlined is-rounded m-2'
+                                onClick={(e) => {handle_price_filter('down', e)}}
+                                >
+                                По убыванию
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
