@@ -7,7 +7,7 @@ export default function Navbar(){
         <nav className="navbar" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
                 <Link className="navbar-item" to="/">
-                    <img src={logo} width="180" height="28"/>
+                    <img src={logo} alt='fast food logo'/>
                 </Link>
             </div>
         </nav>

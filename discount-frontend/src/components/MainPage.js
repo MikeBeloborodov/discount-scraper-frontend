@@ -1,6 +1,8 @@
 import React from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
+import sushi from '../sushi.png'
+import pizza from '../pizza.png'
 
 export default function MainPage(){
     const [columns, setColumns] = React.useState({
@@ -9,6 +11,8 @@ export default function MainPage(){
         "column_3" : [],
         "column_4" : []
     })
+
+    const [cathegory, setCathegory] = React.useState("pizza")
 
     const [pagination, setPagination] = React.useState([])
 
@@ -78,7 +82,7 @@ export default function MainPage(){
         window.scrollTo(0, 0)
         // website buttons
         let website_button_elements
-        fetch(URL + 'website')
+        fetch(URL + `website?cathegory=${cathegory}`)
             .then(res => res.json())
             .then(data => {
                 website_button_elements = data.map(data => {
@@ -97,7 +101,7 @@ export default function MainPage(){
 
         // pagination
         let pagination_elements = []
-        fetch(URL + `promo/count?search=${websiteFilter}`)
+        fetch(URL + `promo/count?cathegory=${cathegory}&website=${websiteFilter}`)
             .then(res => res.json())
             .then(data => {
                 const num_of_pages = Math.ceil(data / (num_of_columns * length_of_columns))
@@ -120,7 +124,7 @@ export default function MainPage(){
 
         // cards
         for (let i = 0; i < num_of_columns; i++){
-            fetch(URL + `promo/slice?limit=${length_of_columns}&skip=${(i * length_of_columns) + pageSkip}&website=${websiteFilter}&order_by=${priceFilter}`, {method: "GET"})
+            fetch(URL + `promo/slice?limit=${length_of_columns}&skip=${(i * length_of_columns) + pageSkip}&cathegory=${cathegory}&website=${websiteFilter}&order_by=${priceFilter}`, {method: "GET"})
                 .then(res => res.json())
                 .then(data => {
                     let elements = data.map(data => {
@@ -164,11 +168,38 @@ export default function MainPage(){
                     })
                 })
             }
-        }, [websiteFilter, pageSkip, priceFilter])
+        }, [websiteFilter, pageSkip, priceFilter, cathegory])
 
     return(
         <>
             <Navbar />
+
+            <section className='section mb-0 pb-0'>
+                <div className='box'>
+                    <div className='columns is-vcentered is-mobile'>
+                        <div className='column is-narrow is-mobile'>
+                            <a className='cathegory-choice' onClick={(e) => {setCathegory('pizza')}}>
+                                <div className="icon-text">
+                                    <span className="icon is-large has-text-info m-2">
+                                        <img className='img' src={pizza}/>
+                                    </span>
+                                </div>
+                                <p className="content has-text-danger m-2">Пицца</p>
+                            </a>
+                        </div>
+                        <div className='column is-narrow is-mobile'>
+                            <a className='cathegory-choice' onClick={(e) => {setCathegory('sushi')}}>
+                                <div className="icon-text">
+                                    <span className="icon is-large has-text-info m-2">
+                                        <img className='img' src={sushi}/>
+                                    </span>
+                                </div>
+                                <p className="content has-text-danger m-2">Роллы</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <section className='section'>
                 <div className={dropDownActive ? "dropdown is-active" : "dropdown"}>
