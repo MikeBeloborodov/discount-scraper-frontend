@@ -1,8 +1,12 @@
 import React from 'react'
-import Navbar from './Navbar'
 import Footer from './Footer'
 import sushi from '../sushi.png'
 import pizza from '../pizza.png'
+import shawarma from '../shawarma.png'
+import burger from '../burger.png'
+import kebab from '../kebab.png'
+import dumplings from '../dumplings.png'
+import pie from '../pie.png'
 
 export default function MainPage(){
     const [columns, setColumns] = React.useState({
@@ -95,6 +99,9 @@ export default function MainPage(){
                 break;
             case 'sushi':
                 setCathegoryNormalName("Роллы")
+                break;
+            case 'shawarma':
+                setCathegoryNormalName("Шаурма")
                 break;
         }
     }
@@ -194,12 +201,10 @@ export default function MainPage(){
 
     return(
         <>
-            <Navbar />
-
             <section className='section mb-0 pb-0'>
                 <div className='box'>
-                    <div className='columns is-vcentered is-mobile'>
-                        <div className='column is-narrow is-mobile'>
+                    <div className='columns is-vcentered'>
+                        <div className='column is-narrow'>
                             <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'pizza')}}>
                                 <div className="icon-text">
                                     <span className="icon is-large has-text-info m-2">
@@ -209,7 +214,7 @@ export default function MainPage(){
                                 <p className="content has-text-danger m-2">Пицца</p>
                             </a>
                         </div>
-                        <div className='column is-narrow is-mobile'>
+                        <div className='column is-narrow'>
                             <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'sushi')}}>
                                 <div className="icon-text">
                                     <span className="icon is-large has-text-info m-2">
@@ -217,6 +222,56 @@ export default function MainPage(){
                                     </span>
                                 </div>
                                 <p className="content has-text-danger m-2">Роллы</p>
+                            </a>
+                        </div>
+                        <div className='column is-narrow'>
+                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'shawarma')}}>
+                                <div className="icon-text">
+                                    <span className="icon is-large has-text-info m-2">
+                                        <img className='img' src={shawarma} alt='shawarma logo' style={{marginLeft: "1rem"}}/>
+                                    </span>
+                                </div>
+                                <p className="content has-text-danger m-2">Шаурма</p>
+                            </a>
+                        </div>
+                        <div className='column is-narrow'>
+                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'burger')}}>
+                                <div className="icon-text">
+                                    <span className="icon is-large has-text-info m-2">
+                                        <img className='img' src={burger} alt='burger logo' style={{marginLeft: "1rem"}}/>
+                                    </span>
+                                </div>
+                                <p className="content has-text-danger m-2">Бургеры</p>
+                            </a>
+                        </div>
+                        <div className='column is-narrow'>
+                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'kebab')}}>
+                                <div className="icon-text">
+                                    <span className="icon is-large has-text-info m-2">
+                                        <img className='img' src={kebab} alt='kebab logo' style={{marginLeft: "1rem"}}/>
+                                    </span>
+                                </div>
+                                <p className="content has-text-danger m-2">Шашлык</p>
+                            </a>
+                        </div>
+                        <div className='column is-narrow'>
+                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'dumplings')}}>
+                                <div className="icon-text">
+                                    <span className="icon is-large has-text-info m-2">
+                                        <img className='img' src={dumplings} alt='dumplings logo' style={{marginLeft: "1rem"}}/>
+                                    </span>
+                                </div>
+                                <p className="content has-text-danger m-2">Хинкали</p>
+                            </a>
+                        </div>
+                        <div className='column is-narrow'>
+                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'pie')}}>
+                                <div className="icon-text">
+                                    <span className="icon is-large has-text-info m-2">
+                                        <img className='img' src={pie} alt='pie logo'/>
+                                    </span>
+                                </div>
+                                <p className="content has-text-danger m-2">Пироги</p>
                             </a>
                         </div>
                     </div>
