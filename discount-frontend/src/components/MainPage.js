@@ -65,6 +65,8 @@ export default function MainPage(){
 
     function handle_price_filter(filter, e){
         setDropDownActive(false)
+        setCurrentPage(1)
+        setPageSkip(0)
         if (filter === "up"){
             setPriceFilter("price_up")
         }else{
@@ -113,8 +115,8 @@ export default function MainPage(){
                         </li>
                     )
                 }
+                setPagination(pagination_elements)
             })
-            setPagination(pagination_elements)
 
         // cards
         for (let i = 0; i < num_of_columns; i++){
@@ -141,7 +143,11 @@ export default function MainPage(){
                                                 <p className="content has-text-dark old-price">{data.old_price} руб</p>
                                             </div>
                                         </div> :
-                                        <p className="content has-text-danger">{data.new_price} руб</p>
+                                        <div className='columns is-mobile'>
+                                            <div className='column'>
+                                                <p className="content has-text-danger">{data.new_price} руб</p>
+                                            </div>
+                                        </div>
                                     }
                                     <a href={data.link} target='_blank'>
                                         <button className='button is-danger is-outlined is-rounded'>{data.website_title}</button>
