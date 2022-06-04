@@ -30,6 +30,10 @@ export default function MainPage(){
 
     const [priceFilter, setPriceFilter] = React.useState('price_up')
 
+    const [priceFilterNormalName, setPriceFilterNormalName] = React.useState('По возрастанию')
+
+    const [cathegoryNormalName, setCathegoryNormalName] = React.useState('Пицца')
+
     const URL = process.env.REACT_APP_API_URL
 
     const num_of_columns = 4
@@ -72,9 +76,26 @@ export default function MainPage(){
         setCurrentPage(1)
         setPageSkip(0)
         if (filter === "up"){
+            setPriceFilterNormalName("По возрастанию")
             setPriceFilter("price_up")
         }else{
+            setPriceFilterNormalName("По убыванию")
             setPriceFilter("price_down")
+        }
+    }
+
+    function handle_cathegory_change(e, new_cathegory){
+        setCathegory(new_cathegory)
+        setWebsiteFilter('')
+        setPageSkip(0)
+        setCurrentPage(1)
+        switch (new_cathegory){
+            case 'pizza':
+                setCathegoryNormalName("Пицца")
+                break;
+            case 'sushi':
+                setCathegoryNormalName("Роллы")
+                break;
         }
     }
 
@@ -138,6 +159,7 @@ export default function MainPage(){
                                 <div className='content has-text-centered'>
                                     <p className="title is-4 has-text-dark mt-2">{data.title}</p>
                                     <p className="content has-text-dark">Вес: {data.weight ? data.weight : "Не указан"}</p>
+                                    {data.ingredients ? <p className="content has-text-dark pr-3 pl-3">{data.ingredients}</p> : <></>}
                                     {data.old_price ? 
                                         <div className='columns is-mobile'>
                                             <div className='column'>
@@ -178,20 +200,20 @@ export default function MainPage(){
                 <div className='box'>
                     <div className='columns is-vcentered is-mobile'>
                         <div className='column is-narrow is-mobile'>
-                            <a className='cathegory-choice' onClick={(e) => {setCathegory('pizza')}}>
+                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'pizza')}}>
                                 <div className="icon-text">
                                     <span className="icon is-large has-text-info m-2">
-                                        <img className='img' src={pizza}/>
+                                        <img className='img' src={pizza} alt="pizza logo"/>
                                     </span>
                                 </div>
                                 <p className="content has-text-danger m-2">Пицца</p>
                             </a>
                         </div>
                         <div className='column is-narrow is-mobile'>
-                            <a className='cathegory-choice' onClick={(e) => {setCathegory('sushi')}}>
+                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'sushi')}}>
                                 <div className="icon-text">
                                     <span className="icon is-large has-text-info m-2">
-                                        <img className='img' src={sushi}/>
+                                        <img className='img' src={sushi} alt='sushi logo'/>
                                     </span>
                                 </div>
                                 <p className="content has-text-danger m-2">Роллы</p>
@@ -202,6 +224,7 @@ export default function MainPage(){
             </section>
 
             <section className='section'>
+                <p className="content has-text-danger m-2">{cathegoryNormalName} / {websiteFilter == "" ? 'Все сайты' : websiteFilter} / {priceFilterNormalName}</p>
                 <div className={dropDownActive ? "dropdown is-active" : "dropdown"}>
                     <div className="dropdown-trigger">
                         <button className="button" 
