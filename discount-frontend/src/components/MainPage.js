@@ -103,6 +103,12 @@ export default function MainPage(){
             case 'shawarma':
                 setCathegoryNormalName("Шаурма")
                 break;
+            case 'burger':
+                setCathegoryNormalName("Бургеры")
+                break;
+            case 'kebab':
+                setCathegoryNormalName("Шашлык")
+                break;
         }
     }
 
