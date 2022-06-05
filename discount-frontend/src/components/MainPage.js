@@ -7,6 +7,7 @@ import burger from '../burger.png'
 import kebab from '../kebab.png'
 import dumplings from '../dumplings.png'
 import pie from '../pie.png'
+import set from '../set.png'
 
 export default function MainPage(){
     const [columns, setColumns] = React.useState({
@@ -108,6 +109,9 @@ export default function MainPage(){
                 break;
             case 'kebab':
                 setCathegoryNormalName("Шашлык")
+                break;
+            case 'dumplings':
+                setCathegoryNormalName("Хинкали")
                 break;
         }
     }
@@ -278,6 +282,16 @@ export default function MainPage(){
                                     </span>
                                 </div>
                                 <p className="content has-text-danger m-2">Пироги</p>
+                            </a>
+                        </div>
+                        <div className='column is-narrow'>
+                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'set')}}>
+                                <div className="icon-text">
+                                    <span className="icon is-large has-text-info ml-4 mt-2 mb-2">
+                                        <img className='img' src={set} alt='set logo'/>
+                                    </span>
+                                </div>
+                                <p className="content has-text-danger m-2">Наборы</p>
                             </a>
                         </div>
                     </div>
