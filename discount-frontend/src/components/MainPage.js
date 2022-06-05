@@ -113,6 +113,9 @@ export default function MainPage(){
             case 'dumplings':
                 setCathegoryNormalName("Хинкали")
                 break;
+            case 'pie':
+                setCathegoryNormalName("Пироги")
+                break;
         }
     }
 
@@ -174,8 +177,8 @@ export default function MainPage(){
                                     </figure>
                                 </div>
                                 <div className='content has-text-centered'>
-                                    <p className="title is-4 has-text-dark mt-2">{data.title}</p>
-                                    <p className="content has-text-dark">Вес: {data.weight ? data.weight : "Не указан"}</p>
+                                    <p className="title is-4 has-text-dark mt-2 pl-5 pr-5">{data.title}</p>
+                                    {data.weight ? <p className="content has-text-dark">Вес: {data.weight}</p> : <></>}
                                     {data.ingredients ? <p className="content has-text-dark pr-3 pl-3">{data.ingredients}</p> : <></>}
                                     {data.old_price ? 
                                         <div className='columns is-mobile'>
@@ -366,13 +369,13 @@ export default function MainPage(){
                             className="pagination-previous"
                             onClick={(e) => {handle_previous_page(e)}}
                             >
-                                Previous
+                            Назад
                             </a>
                             <a 
                             className="pagination-next"
                             onClick={(e) => {handle_next_page(e)}}
                             >
-                            Next page
+                            Следующая
                             </a>
                         </div>
                     <nav className="pagination is-rounded" role="navigation" aria-label="pagination">
