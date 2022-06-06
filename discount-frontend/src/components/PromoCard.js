@@ -5,7 +5,7 @@ export default function PromoCard({ data }){
         <div className='card'>
             <div className="card-image">
                 <figure className="image is-4by3">
-                    <img src={data.img} alt="Food item image" className='cover-img'/>
+                    <img src={data.img} alt="Food item" className='cover-img'/>
                 </figure>
             </div>
             <div className='content has-text-centered'>
@@ -27,7 +27,7 @@ export default function PromoCard({ data }){
                         </div>
                     </div>
                 }
-                <a href={data.link} target='_blank'>
+                <a href={data.link} target='_blank' rel="noreferrer">
                     <button className='button is-danger is-outlined is-rounded'>{data.website_title}</button>
                 </a>
             </div>

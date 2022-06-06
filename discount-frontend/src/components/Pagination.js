@@ -9,18 +9,18 @@ export default function Pagination({
         <section className='section mt-0 pt-0'>
             <div className='box'>
                     <div className='block'>
-                        <a 
+                        <button 
                         className="pagination-previous"
                         onClick={(e) => {handle_previous_page(e)}}
                         >
                         Назад
-                        </a>
-                        <a 
+                        </button>
+                        <button 
                         className="pagination-next"
                         onClick={(e) => {handle_next_page(e)}}
                         >
                         Следующая
-                        </a>
+                        </button>
                     </div>
                 <nav className="pagination is-rounded" role="navigation" aria-label="pagination">
                 </nav>

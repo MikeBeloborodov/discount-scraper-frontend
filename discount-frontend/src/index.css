@@ -15,3 +15,7 @@
     height: 2rem;
     object-fit: cover;
 }
+
+.cathegory-button{
+    min-width: 80px;
+}

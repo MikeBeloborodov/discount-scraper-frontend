@@ -117,6 +117,9 @@ export default function MainPage(){
             case 'combo':
                 setCathegoryNormalName("Наборы")
                 break;
+            default:
+                setCathegoryNormalName("Пицца")
+                break;
         }
     }
 
@@ -151,13 +154,13 @@ export default function MainPage(){
                 for (let i = 1; i <= num_of_pages; i++){
                     pagination_elements.push(
                         <li key={"li" + i}>
-                            <a 
+                            <button 
                             className={currentPage === i ? "pagination-link m-2 is-current danger" : "pagination-link m-2"}
                             aria-label={`Goto page ${i}`}
                             onClick={(e) => handle_pagination_filter(i, e)}
                             >
                                 {i}
-                            </a>
+                            </button>
                         </li>
                     )
                 }
@@ -182,7 +185,7 @@ export default function MainPage(){
                     })
                 }
             })
-    }, [websiteFilter, pageSkip, priceFilter, cathegory])
+    }, [websiteFilter, pageSkip, priceFilter, cathegory, currentPage, URL])
 
     return(
         <>
