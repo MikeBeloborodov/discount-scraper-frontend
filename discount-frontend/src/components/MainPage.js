@@ -1,5 +1,6 @@
 import React from 'react'
 import Footer from './Footer'
+import PromoCard from './PromoCard'
 import sushi from '../sushi.png'
 import pizza from '../pizza.png'
 import shawarma from '../shawarma.png'
@@ -7,7 +8,8 @@ import burger from '../burger.png'
 import kebab from '../kebab.png'
 import dumplings from '../dumplings.png'
 import pie from '../pie.png'
-import set from '../set.png'
+import combo from '../combo.png'
+
 
 export default function MainPage(){
     const [columns, setColumns] = React.useState({
@@ -116,6 +118,9 @@ export default function MainPage(){
             case 'pie':
                 setCathegoryNormalName("Пироги")
                 break;
+            case 'combo':
+                setCathegoryNormalName("Наборы")
+                break;
         }
     }
 
@@ -164,52 +169,24 @@ export default function MainPage(){
             })
 
         // cards
-        for (let i = 0; i < num_of_columns; i++){
-            fetch(URL + `promo/slice?limit=${length_of_columns}&skip=${(i * length_of_columns) + pageSkip}&cathegory=${cathegory}&website=${websiteFilter}&order_by=${priceFilter}`, {method: "GET"})
+        
+            fetch(URL + `promo/slice?limit=${length_of_columns * num_of_columns}&skip=${pageSkip}&cathegory=${cathegory}&website=${websiteFilter}&order_by=${priceFilter}`, {method: "GET"})
                 .then(res => res.json())
                 .then(data => {
-                    let elements = data.map(data => {
-                        return (
-                            <div className='card' key={data.item_id}>
-                                <div className="card-image">
-                                    <figure className="image is-4by3">
-                                        <img src={data.img} alt="Food item image" className='cover-img'/>
-                                    </figure>
-                                </div>
-                                <div className='content has-text-centered'>
-                                    <p className="title is-4 has-text-dark mt-2 pl-5 pr-5">{data.title}</p>
-                                    {data.weight ? <p className="content has-text-dark">Вес: {data.weight}</p> : <></>}
-                                    {data.ingredients ? <p className="content has-text-dark pr-3 pl-3">{data.ingredients}</p> : <></>}
-                                    {data.old_price ? 
-                                        <div className='columns is-mobile'>
-                                            <div className='column'>
-                                                <p className="content has-text-danger">{data.new_price} руб</p>
-                                            </div>
-                                            <div className='column'>
-                                                <p className="content has-text-dark old-price">{data.old_price} руб</p>
-                                            </div>
-                                        </div> :
-                                        <div className='columns is-mobile'>
-                                            <div className='column'>
-                                                <p className="content has-text-danger">{data.new_price} руб</p>
-                                            </div>
-                                        </div>
-                                    }
-                                    <a href={data.link} target='_blank'>
-                                        <button className='button is-danger is-outlined is-rounded'>{data.website_title}</button>
-                                    </a>
-                                </div>
-                            </div>
-                        )
-                    })
-                    setColumns(oldValues => {
-                        return ({
-                            ...oldValues,
-                            [`column_${i + 1}`]: elements
+                    for (let i = 0; i < num_of_columns; i++){
+                        let elements = data.slice(i * length_of_columns, (i * length_of_columns) + length_of_columns).map(data => {
+                            return (
+                                <PromoCard key={data.item_id} data={data} />
+                            )
                         })
-                    })
+                        setColumns(oldValues => {
+                            return ({
+                                ...oldValues,
+                                [`column_${i + 1}`]: elements
+                            })
+                        })
+                    }
                 })
-            }
         }, [websiteFilter, pageSkip, priceFilter, cathegory])
 
     return(
@@ -288,10 +265,10 @@ export default function MainPage(){
                             </a>
                         </div>
                         <div className='column is-narrow'>
-                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'set')}}>
+                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'combo')}}>
                                 <div className="icon-text">
                                     <span className="icon is-large has-text-info ml-4 mt-2 mb-2">
-                                        <img className='img' src={set} alt='set logo'/>
+                                        <img className='img' src={combo} alt='combo logo'/>
                                     </span>
                                 </div>
                                 <p className="content has-text-danger m-2">Наборы</p>
@@ -302,7 +279,7 @@ export default function MainPage(){
             </section>
 
             <section className='section'>
-                <p className="content has-text-danger m-2">{cathegoryNormalName} / {websiteFilter == "" ? 'Все сайты' : websiteFilter} / {priceFilterNormalName}</p>
+                <p className="content has-text-danger m-2">{cathegoryNormalName} / {websiteFilter === "" ? 'Все сайты' : websiteFilter} / {priceFilterNormalName}</p>
                 <div className={dropDownActive ? "dropdown is-active" : "dropdown"}>
                     <div className="dropdown-trigger">
                         <button className="button" 
