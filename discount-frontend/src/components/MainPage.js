@@ -1,14 +1,10 @@
 import React from 'react'
 import Footer from './Footer'
 import PromoCard from './PromoCard'
-import sushi from '../sushi.png'
-import pizza from '../pizza.png'
-import shawarma from '../shawarma.png'
-import burger from '../burger.png'
-import kebab from '../kebab.png'
-import dumplings from '../dumplings.png'
-import pie from '../pie.png'
-import combo from '../combo.png'
+import Cathegories from './Cathegories'
+import SortResults from './SortResults'
+import Pagination from './Pagination'
+
 
 
 export default function MainPage(){
@@ -169,158 +165,39 @@ export default function MainPage(){
             })
 
         // cards
-        
-            fetch(URL + `promo/slice?limit=${length_of_columns * num_of_columns}&skip=${pageSkip}&cathegory=${cathegory}&website=${websiteFilter}&order_by=${priceFilter}`, {method: "GET"})
-                .then(res => res.json())
-                .then(data => {
-                    for (let i = 0; i < num_of_columns; i++){
-                        let elements = data.slice(i * length_of_columns, (i * length_of_columns) + length_of_columns).map(data => {
-                            return (
-                                <PromoCard key={data.item_id} data={data} />
-                            )
+        fetch(URL + `promo/slice?limit=${length_of_columns * num_of_columns}&skip=${pageSkip}&cathegory=${cathegory}&website=${websiteFilter}&order_by=${priceFilter}`, {method: "GET"})
+            .then(res => res.json())
+            .then(data => {
+                for (let i = 0; i < num_of_columns; i++){
+                    let elements = data.slice(i * length_of_columns, (i * length_of_columns) + length_of_columns).map(data => {
+                        return (
+                            <PromoCard key={data.item_id} data={data} />
+                        )
+                    })
+                    setColumns(oldValues => {
+                        return ({
+                            ...oldValues,
+                            [`column_${i + 1}`]: elements
                         })
-                        setColumns(oldValues => {
-                            return ({
-                                ...oldValues,
-                                [`column_${i + 1}`]: elements
-                            })
-                        })
-                    }
-                })
-        }, [websiteFilter, pageSkip, priceFilter, cathegory])
+                    })
+                }
+            })
+    }, [websiteFilter, pageSkip, priceFilter, cathegory])
 
     return(
         <>
-            <section className='section mb-0 pb-0'>
-                <div className='box'>
-                    <div className='columns is-vcentered'>
-                        <div className='column is-narrow'>
-                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'pizza')}}>
-                                <div className="icon-text">
-                                    <span className="icon is-large has-text-info m-2">
-                                        <img className='img' src={pizza} alt="pizza logo"/>
-                                    </span>
-                                </div>
-                                <p className="content has-text-danger m-2">Пицца</p>
-                            </a>
-                        </div>
-                        <div className='column is-narrow'>
-                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'sushi')}}>
-                                <div className="icon-text">
-                                    <span className="icon is-large has-text-info m-2">
-                                        <img className='img' src={sushi} alt='sushi logo'/>
-                                    </span>
-                                </div>
-                                <p className="content has-text-danger m-2">Роллы</p>
-                            </a>
-                        </div>
-                        <div className='column is-narrow'>
-                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'shawarma')}}>
-                                <div className="icon-text">
-                                    <span className="icon is-large has-text-info m-2">
-                                        <img className='img' src={shawarma} alt='shawarma logo' style={{marginLeft: "1rem"}}/>
-                                    </span>
-                                </div>
-                                <p className="content has-text-danger m-2">Шаурма</p>
-                            </a>
-                        </div>
-                        <div className='column is-narrow'>
-                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'burger')}}>
-                                <div className="icon-text">
-                                    <span className="icon is-large has-text-info m-2">
-                                        <img className='img' src={burger} alt='burger logo' style={{marginLeft: "1rem"}}/>
-                                    </span>
-                                </div>
-                                <p className="content has-text-danger m-2">Бургеры</p>
-                            </a>
-                        </div>
-                        <div className='column is-narrow'>
-                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'kebab')}}>
-                                <div className="icon-text">
-                                    <span className="icon is-large has-text-info m-2">
-                                        <img className='img' src={kebab} alt='kebab logo' style={{marginLeft: "1rem"}}/>
-                                    </span>
-                                </div>
-                                <p className="content has-text-danger m-2">Шашлык</p>
-                            </a>
-                        </div>
-                        <div className='column is-narrow'>
-                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'dumplings')}}>
-                                <div className="icon-text">
-                                    <span className="icon is-large has-text-info m-2">
-                                        <img className='img' src={dumplings} alt='dumplings logo' style={{marginLeft: "1rem"}}/>
-                                    </span>
-                                </div>
-                                <p className="content has-text-danger m-2">Хинкали</p>
-                            </a>
-                        </div>
-                        <div className='column is-narrow'>
-                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'pie')}}>
-                                <div className="icon-text">
-                                    <span className="icon is-large has-text-info m-2">
-                                        <img className='img' src={pie} alt='pie logo'/>
-                                    </span>
-                                </div>
-                                <p className="content has-text-danger m-2">Пироги</p>
-                            </a>
-                        </div>
-                        <div className='column is-narrow'>
-                            <a className='cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'combo')}}>
-                                <div className="icon-text">
-                                    <span className="icon is-large has-text-info ml-4 mt-2 mb-2">
-                                        <img className='img' src={combo} alt='combo logo'/>
-                                    </span>
-                                </div>
-                                <p className="content has-text-danger m-2">Наборы</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <Cathegories handle_cathegory_change={handle_cathegory_change} />
 
-            <section className='section'>
-                <p className="content has-text-danger m-2">{cathegoryNormalName} / {websiteFilter === "" ? 'Все сайты' : websiteFilter} / {priceFilterNormalName}</p>
-                <div className={dropDownActive ? "dropdown is-active" : "dropdown"}>
-                    <div className="dropdown-trigger">
-                        <button className="button" 
-                        aria-haspopup="true" 
-                        aria-controls="dropdown-menu2"
-                        onClick={(e) => {setDropDownActive(oldValue => !oldValue)}}
-                        >
-                        <span>{"Сортировать результаты"}&emsp;&emsp;&emsp;&emsp;</span>
-                        <span className="icon is-small">
-                            <i className="fas fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                        </button>
-                    </div>
-                    <div className="dropdown-menu" id="dropdown-menu2" role="menu">
-                        <div className='box'>
-                            <p className='content'>По сайтам:</p>
-                            <button 
-                                className='button is-danger is-outlined is-rounded m-2' 
-                                onClick={(e) => handle_website_filter('', e)}>
-                                    Все сайты
-                                </button>
-                            {websiteButtons}
-                            <div className='block mt-4'>
-                                <p className='content'>По ценам:</p>
-                                <button 
-                                className='button is-danger is-outlined is-rounded m-2'
-                                onClick={(e) => {handle_price_filter('up', e)}}
-                                >
-                                По возрастанию
-                                </button>
-                                <button 
-                                className='button is-danger is-outlined is-rounded m-2'
-                                onClick={(e) => {handle_price_filter('down', e)}}
-                                >
-                                По убыванию
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <SortResults 
+                cathegoryNormalName={cathegoryNormalName}
+                dropDownActive={dropDownActive}
+                setDropDownActive={setDropDownActive}
+                websiteFilter={websiteFilter}
+                priceFilterNormalName={priceFilterNormalName}
+                handle_website_filter={handle_website_filter}
+                handle_price_filter={handle_price_filter}
+                websiteButtons={websiteButtons}
+            />
 
             <section className='section mt-0 mb-0 pt-0 pb-0'>
                 <div className='columns'>
@@ -339,29 +216,11 @@ export default function MainPage(){
                 </div>
             </section>
 
-            <section className='section mt-0 pt-0'>
-                <div className='box'>
-                        <div className='block'>
-                            <a 
-                            className="pagination-previous"
-                            onClick={(e) => {handle_previous_page(e)}}
-                            >
-                            Назад
-                            </a>
-                            <a 
-                            className="pagination-next"
-                            onClick={(e) => {handle_next_page(e)}}
-                            >
-                            Следующая
-                            </a>
-                        </div>
-                    <nav className="pagination is-rounded" role="navigation" aria-label="pagination">
-                    </nav>
-                        <ul className="pagination-list">
-                            {pagination}
-                        </ul>
-                </div>
-            </section>
+            <Pagination 
+                handle_previous_page={handle_previous_page}
+                handle_next_page={handle_next_page}
+                pagination={pagination}
+            />
 
             <Footer />
         </>
