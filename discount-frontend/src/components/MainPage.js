@@ -8,12 +8,8 @@ import Pagination from './Pagination'
 
 
 export default function MainPage(){
-    const [columns, setColumns] = React.useState({
-        "column_1" : [],
-        "column_2" : [],
-        "column_3" : [],
-        "column_4" : []
-    })
+
+    const [cards, setCards] = React.useState([])
 
     const [cathegory, setCathegory] = React.useState("pizza")
 
@@ -171,19 +167,12 @@ export default function MainPage(){
         fetch(URL + `promo/slice?limit=${length_of_columns * num_of_columns}&skip=${pageSkip}&cathegory=${cathegory}&website=${websiteFilter}&order_by=${priceFilter}`, {method: "GET"})
             .then(res => res.json())
             .then(data => {
-                for (let i = 0; i < num_of_columns; i++){
-                    let elements = data.slice(i * length_of_columns, (i * length_of_columns) + length_of_columns).map(data => {
-                        return (
-                            <PromoCard key={data.item_id} data={data} />
-                        )
-                    })
-                    setColumns(oldValues => {
-                        return ({
-                            ...oldValues,
-                            [`column_${i + 1}`]: elements
-                        })
-                    })
-                }
+                let elements = data.map(data => {
+                    return (
+                        <PromoCard key={data.item_id} data={data} />
+                    )
+                })
+                setCards(elements)
             })
     }, [websiteFilter, pageSkip, priceFilter, cathegory, currentPage, URL])
 
@@ -203,19 +192,8 @@ export default function MainPage(){
             />
 
             <section className='section mt-0 mb-0 pt-0 pb-0'>
-                <div className='columns'>
-                    <div className='column'>
-                        {columns.column_1}
-                    </div>
-                    <div className='column'>
-                        {columns.column_2}
-                    </div>
-                    <div className='column'>
-                        {columns.column_3}
-                    </div>
-                    <div className='column'>
-                        {columns.column_4}
-                    </div>
+                <div className='block cards-container'>
+                    {cards}
                 </div>
             </section>
 

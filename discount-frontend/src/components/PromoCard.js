@@ -2,9 +2,9 @@ import React from 'react'
 
 export default function PromoCard({ data }){
     return(
-        <div className='card'>
+        <div className='card m-5'>
             <div className="card-image">
-                <figure className="image is-4by3">
+                <figure className="image is-5by4 card-img">
                     <img src={data.img} alt="Food item" className='cover-img'/>
                 </figure>
             </div>
@@ -13,9 +13,9 @@ export default function PromoCard({ data }){
                 {data.weight ? <p className="content has-text-dark">Вес: {data.weight}</p> : <></>}
                 {data.ingredients ? <p className="content has-text-dark pr-3 pl-3">{data.ingredients}</p> : <></>}
                 {data.old_price ? 
-                    <div className='columns is-mobile'>
+                    <div className='columns is-mobile prices-columns'>
                         <div className='column'>
-                            <p className="content has-text-danger">{data.new_price} руб</p>
+                            <h1 className="title has-text-danger is-5">{data.new_price} руб</h1>
                         </div>
                         <div className='column'>
                             <p className="content has-text-dark old-price">{data.old_price} руб</p>
@@ -23,11 +23,11 @@ export default function PromoCard({ data }){
                     </div> :
                     <div className='columns is-mobile'>
                         <div className='column'>
-                            <p className="content has-text-danger">{data.new_price} руб</p>
+                            <p className="title has-text-danger is-5">{data.new_price} руб</p>
                         </div>
                     </div>
                 }
-                <a href={data.link} target='_blank' rel="noreferrer">
+                <a className='website-link-button' href={data.link} target='_blank' rel="noreferrer">
                     <button className='button is-danger is-outlined is-rounded'>{data.website_title}</button>
                 </a>
             </div>

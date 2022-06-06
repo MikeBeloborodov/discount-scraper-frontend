@@ -6,7 +6,7 @@ export default function Pagination({
     pagination
 }){
     return (
-        <section className='section mt-0 pt-0'>
+        <section className='section mt-6 pt-0'>
             <div className='box'>
                     <div className='block'>
                         <button 
