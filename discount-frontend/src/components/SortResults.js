@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function SortResults({
-    cathegoryNormalName,
+    categoryNormalName,
     dropDownActive,
     setDropDownActive,
     websiteFilter,
@@ -12,7 +12,7 @@ export default function SortResults({
 }){
     return(
         <section className='section'>
-            <p className="content has-text-danger m-2">{cathegoryNormalName} / {websiteFilter === "" ? 'Все сайты' : websiteFilter} / {priceFilterNormalName}</p>
+            <p className="content has-text-danger m-2">{categoryNormalName} / {websiteFilter === "" ? 'Все сайты' : websiteFilter} / {priceFilterNormalName}</p>
             <div className={dropDownActive ? "dropdown is-active" : "dropdown"}>
                 <div className="dropdown-trigger">
                     <button className="button" 

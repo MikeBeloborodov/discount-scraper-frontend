@@ -8,13 +8,13 @@ import dumplings from '../dumplings.png'
 import pie from '../pie.png'
 import combo from '../combo.png'
 
-export default function Cathegories({ handle_cathegory_change }){
+export default function Categories({ handle_category_change }){
     return(
         <section className='section mb-0 pb-0' style={{display: "flex"}}>
             <div className='box' style={{display: "flex", flexWrap: "wrap"}}>
                 
-                <div className='block has-text-centered cathegory-button'>
-                    <button className='button is-white is-large cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'pizza')}}>
+                <div className='block has-text-centered category-button'>
+                    <button className='button is-white is-large category-choice' onClick={(e) => {handle_category_change(e, 'pizza')}}>
                         <div className="icon-text">
                             <span className="icon is-large has-text-info">
                                 <img className='img' src={pizza} alt="pizza logo"/>
@@ -24,8 +24,8 @@ export default function Cathegories({ handle_cathegory_change }){
                     <p className="content has-text-danger m-2">Пицца</p>
                 </div>
                 
-                <div className='block has-text-centered cathegory-button'>
-                <button className='button is-white is-large cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'sushi')}}>
+                <div className='block has-text-centered category-button'>
+                <button className='button is-white is-large category-choice' onClick={(e) => {handle_category_change(e, 'sushi')}}>
                     <div className="icon-text">
                         <span className="icon is-large has-text-info">
                             <img className='img' src={sushi} alt='sushi logo'/>
@@ -35,8 +35,8 @@ export default function Cathegories({ handle_cathegory_change }){
                 <p className="content has-text-danger m-2">Роллы</p>
                 </div>
                 
-                <div className='block has-text-centered cathegory-button'>
-                    <button className='button is-white is-large cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'shawarma')}}>
+                <div className='block has-text-centered category-button'>
+                    <button className='button is-white is-large category-choice' onClick={(e) => {handle_category_change(e, 'shawarma')}}>
                         <div className="icon-text">
                             <span className="icon is-large has-text-info">
                                 <img className='img' src={shawarma} alt='shawarma logo'/>
@@ -46,8 +46,8 @@ export default function Cathegories({ handle_cathegory_change }){
                     <p className="content has-text-danger m-2">Шаурма</p>
                 </div>
                 
-                <div className='block has-text-centered cathegory-button'>
-                    <button className='button is-white is-large cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'burger')}}>
+                <div className='block has-text-centered category-button'>
+                    <button className='button is-white is-large category-choice' onClick={(e) => {handle_category_change(e, 'burger')}}>
                         <div className="icon-text">
                             <span className="icon is-large has-text-info">
                                 <img className='img' src={burger} alt='burger logo'/>
@@ -57,8 +57,8 @@ export default function Cathegories({ handle_cathegory_change }){
                     <p className="content has-text-danger m-2">Бургеры</p>
                 </div>
 
-                <div className='block has-text-centered cathegory-button'>
-                    <button className='button is-white is-large cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'kebab')}}>
+                <div className='block has-text-centered category-button'>
+                    <button className='button is-white is-large category-choice' onClick={(e) => {handle_category_change(e, 'kebab')}}>
                         <div className="icon-text">
                             <span className="icon is-large has-text-info">
                                 <img className='img' src={kebab} alt='kebab logo'/>
@@ -68,8 +68,8 @@ export default function Cathegories({ handle_cathegory_change }){
                     <p className="content has-text-danger m-2">Шашлык</p>
                 </div>
 
-                <div className='block has-text-centered cathegory-button'>
-                    <button className='button is-white is-large cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'dumplings')}}>
+                <div className='block has-text-centered category-button'>
+                    <button className='button is-white is-large category-choice' onClick={(e) => {handle_category_change(e, 'dumplings')}}>
                         <div className="icon-text">
                             <span className="icon is-large has-text-info">
                                 <img className='img' src={dumplings} alt='dumplings logo'/>
@@ -79,8 +79,8 @@ export default function Cathegories({ handle_cathegory_change }){
                     <p className="content has-text-danger m-2">Хинкали</p>
                 </div>
 
-                <div className='block has-text-centered cathegory-button'>
-                    <button className='button is-white is-large cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'pie')}}>
+                <div className='block has-text-centered category-button'>
+                    <button className='button is-white is-large category-choice' onClick={(e) => {handle_category_change(e, 'pie')}}>
                         <div className="icon-text">
                             <span className="icon is-large has-text-info">
                                 <img className='img' src={pie} alt='pie logo'/>
@@ -90,8 +90,8 @@ export default function Cathegories({ handle_cathegory_change }){
                     <p className="content has-text-danger m-2">Пироги</p>
                 </div>
 
-                <div className='block has-text-centered cathegory-button'>
-                    <button className='button is-white is-large cathegory-choice' onClick={(e) => {handle_cathegory_change(e, 'combo')}}>
+                <div className='block has-text-centered category-button'>
+                    <button className='button is-white is-large category-choice' onClick={(e) => {handle_category_change(e, 'combo')}}>
                         <div className="icon-text">
                             <span className="icon is-large has-text-info">
                                 <img className='img' src={combo} alt='combo logo'/>

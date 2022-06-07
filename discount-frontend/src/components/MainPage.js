@@ -1,9 +1,10 @@
 import React from 'react'
 import Footer from './Footer'
 import PromoCard from './PromoCard'
-import Cathegories from './Cathegories'
+import Categories from './Categories'
 import SortResults from './SortResults'
 import Pagination from './Pagination'
+import CardContainer from './CardContainer'
 
 
 
@@ -11,7 +12,7 @@ export default function MainPage(){
 
     const [cards, setCards] = React.useState([])
 
-    const [cathegory, setCathegory] = React.useState("pizza")
+    const [category, setcategory] = React.useState("pizza")
 
     const [pagination, setPagination] = React.useState([])
 
@@ -31,7 +32,7 @@ export default function MainPage(){
 
     const [priceFilterNormalName, setPriceFilterNormalName] = React.useState('По возрастанию')
 
-    const [cathegoryNormalName, setCathegoryNormalName] = React.useState('Пицца')
+    const [categoryNormalName, setcategoryNormalName] = React.useState('Пицца')
 
     const URL = process.env.REACT_APP_API_URL
 
@@ -83,38 +84,38 @@ export default function MainPage(){
         }
     }
 
-    function handle_cathegory_change(e, new_cathegory){
-        setCathegory(new_cathegory)
+    function handle_category_change(e, new_category){
+        setcategory(new_category)
         setWebsiteFilter('')
         setPageSkip(0)
         setCurrentPage(1)
-        switch (new_cathegory){
+        switch (new_category){
             case 'pizza':
-                setCathegoryNormalName("Пицца")
+                setcategoryNormalName("Пицца")
                 break;
             case 'sushi':
-                setCathegoryNormalName("Роллы")
+                setcategoryNormalName("Роллы")
                 break;
             case 'shawarma':
-                setCathegoryNormalName("Шаурма")
+                setcategoryNormalName("Шаурма")
                 break;
             case 'burger':
-                setCathegoryNormalName("Бургеры")
+                setcategoryNormalName("Бургеры")
                 break;
             case 'kebab':
-                setCathegoryNormalName("Шашлык")
+                setcategoryNormalName("Шашлык")
                 break;
             case 'dumplings':
-                setCathegoryNormalName("Хинкали")
+                setcategoryNormalName("Хинкали")
                 break;
             case 'pie':
-                setCathegoryNormalName("Пироги")
+                setcategoryNormalName("Пироги")
                 break;
             case 'combo':
-                setCathegoryNormalName("Наборы")
+                setcategoryNormalName("Наборы")
                 break;
             default:
-                setCathegoryNormalName("Пицца")
+                setcategoryNormalName("Пицца")
                 break;
         }
     }
@@ -123,7 +124,7 @@ export default function MainPage(){
         window.scrollTo(0, 0)
         // website buttons
         let website_button_elements
-        fetch(URL + `website?cathegory=${cathegory}`)
+        fetch(URL + `website?category=${category}`)
             .then(res => res.json())
             .then(data => {
                 website_button_elements = data.map(data => {
@@ -142,7 +143,7 @@ export default function MainPage(){
 
         // pagination
         let pagination_elements = []
-        fetch(URL + `promo/count?cathegory=${cathegory}&website=${websiteFilter}`)
+        fetch(URL + `promo/count?category=${category}&website=${websiteFilter}`)
             .then(res => res.json())
             .then(data => {
                 const num_of_pages = Math.ceil(data / (num_of_columns * length_of_columns))
@@ -164,7 +165,7 @@ export default function MainPage(){
             })
 
         // cards
-        fetch(URL + `promo/slice?limit=${length_of_columns * num_of_columns}&skip=${pageSkip}&cathegory=${cathegory}&website=${websiteFilter}&order_by=${priceFilter}`, {method: "GET"})
+        fetch(URL + `promo/slice?limit=${length_of_columns * num_of_columns}&skip=${pageSkip}&category=${category}&website=${websiteFilter}&order_by=${priceFilter}`, {method: "GET"})
             .then(res => res.json())
             .then(data => {
                 let elements = data.map(data => {
@@ -174,14 +175,14 @@ export default function MainPage(){
                 })
                 setCards(elements)
             })
-    }, [websiteFilter, pageSkip, priceFilter, cathegory, currentPage, URL])
+    }, [websiteFilter, pageSkip, priceFilter, category, currentPage, URL])
 
     return(
         <>
-            <Cathegories handle_cathegory_change={handle_cathegory_change} />
+            <Categories handle_category_change={handle_category_change} />
 
             <SortResults 
-                cathegoryNormalName={cathegoryNormalName}
+                categoryNormalName={categoryNormalName}
                 dropDownActive={dropDownActive}
                 setDropDownActive={setDropDownActive}
                 websiteFilter={websiteFilter}
@@ -191,11 +192,7 @@ export default function MainPage(){
                 websiteButtons={websiteButtons}
             />
 
-            <section className='section mt-0 mb-0 pt-0 pb-0'>
-                <div className='block cards-container'>
-                    {cards}
-                </div>
-            </section>
+            <CardContainer cards={cards} />
 
             <Pagination 
                 handle_previous_page={handle_previous_page}
